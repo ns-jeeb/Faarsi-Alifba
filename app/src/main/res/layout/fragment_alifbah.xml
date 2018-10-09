@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:fitsSystemWindows="true"
+              tools:context="com.jeeb.farsialifba.MainActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/ani_alif"
+        android:textSize="80sp"
+        />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rotationY="180"
+        android:numColumns="6"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp"
+        android:layout_below="@+id/ani_alif"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/mylist"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_practise"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:textSize="25dp"
+        android:text="practise | تمرین "/>
+
+
+</RelativeLayout>

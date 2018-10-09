@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_alif">#00C853</color>
+    <color name="background_ba">#00E676</color>
+    <color name="background_paye">#69F0AE</color>
+    <color name="background_taa">#B9F6CA</color>
+    <color name="background_saye">#1B5E20</color>
+    <color name="background_jim">#2E7D32</color>
+    <color name="background_chaye">#388E3C</color>
+    <color name="background_heye">#43A047</color>
+    <color name="background_khaye">#4CAF50</color>
+    <color name="background_dol">#66BB6A</color>
+    <color name="background_zol">#81C784</color>
+    <color name="background_ray">#A5D6A7</color>
+    <color name="background_zay">#C8E6C9</color>
+    <color name="background_zghey">#E8F5E9</color>
+    <color name="background_sin">#4CAF50</color>
+    <color name="background_shin">#0091EA</color>
+    <color name="background_swat">#00B0FF</color>
+    <color name="background_zowat">#01579B</color>
+    <color name="background_toe">#0277BD</color>
+    <color name="background_zoe">#0097A7</color>
+    <color name="background_hain">#1E88E5</color>
+    <color name="background_ghain">#1976D2</color>
+    <color name="background_faa">#1565C0</color>
+    <color name="background_qof">#0D47A1</color>
+    <color name="background_kof">#82B1FF</color>
+    <color name="background_gof">#448AFF</color>
+    <color name="background_lom">#2979FF</color>
+    <color name="background_mim">#2962FF</color>
+    <color name="background_non">#DCE775</color>
+    <color name="background_wow">#D4E157</color>
+    <color name="background_hedoshima">#CDDC39</color>
+    <color name="background_hamza">#C0CA33</color>
+    <color name="background_yah">#AFB42B</color>
+</resources>

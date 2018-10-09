@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">الفبا</string>
+    <string name="alifbah_tab">الفبا</string>
+    <string name="number_tab">نمبر ها</string>
+    <string name="number_tab1">اعداد</string>
+    <string name="action_settings">Settings</string>
+    <string name="message_conformation">Do you want to do the test?\n آیا می خواهید تست انجام دهید؟</string>
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="alifBah">
+        <item>ا</item>
+        <item>ب</item>
+        <item>پ</item>
+        <item>ت</item>
+        <item>ث</item>
+        <item>ج</item>
+        <item>چ</item>
+        <item>ح</item>
+        <item>خ</item>
+        <item>د</item>
+        <item>ذ</item>
+        <item>ر</item>
+        <item>ز</item>
+        <item>ژ</item>
+        <item>س</item>
+        <item>ش</item>
+        <item>ص</item>
+        <item>ض</item>
+        <item>ط</item>
+        <item>ظ</item>
+        <item>ع</item>
+        <item>غ</item>
+        <item>ف</item>
+        <item>ق</item>
+        <item>ک</item>
+        <item>گ</item>
+        <item>ل</item>
+        <item>م</item>
+        <item>ن</item>
+        <item>و</item>
+        <item>ه</item>
+        <item>ء</item>
+        <item>ی</item>
+    </string-array>
+
+    <string-array name="Numbers">
+        <item>۱ </item>
+        <item>۲ </item>
+        <item>۳ </item>
+        <item>۴ </item>
+        <item>۵ </item>
+        <item>۶ </item>
+        <item>۷ </item>
+        <item>۸ </item>
+        <item>۹ </item>
+        <item>۱۰</item>
+        <item>۱۱</item>
+        <item>۱۲</item>
+        <item>۱۳</item>
+        <item>۱۴</item>
+        <item>۱۵</item>
+        <item>۱۶</item>
+        <item>۱۷</item>
+        <item>۱۸</item>
+        <item>۱۹</item>
+        <item>۲۰</item>
+        <item>۲۱</item>
+        <item>۲۲</item>
+        <item>۲۳</item>
+        <item>۲۴</item>
+        <item>۲۵</item>
+        <item>۲۶</item>
+        <item>۲۷</item>
+        <item>۲۸</item>
+        <item>۲۹</item>
+        <item>۳۰</item>
+        <item>۳۱</item>
+        <item>۳۲</item>
+        <item>۳۳</item>
+        <item>۳۴</item>
+        <item>۳۵</item>
+        <item>۳۶</item>
+        <item>۳۷</item>
+        <item>۳۸</item>
+        <item>۳۹</item>
+        <item>۴۰</item>
+    </string-array>
+    <string name="title_activity_recording_list">RecordingListActivity</string>
+</resources>

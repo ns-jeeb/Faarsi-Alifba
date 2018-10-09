@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="65dp"
+    android:layout_height="45dp"
+    android:baselineAligned="false"
+    android:descendantFocusability="blocksDescendants"
+    android:rotationY="180"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:textSize="30sp"
+        android:id="@+id/item_alifba"/>
+
+
+</LinearLayout>
