@@ -9,7 +9,7 @@
             android:layout_height="50dp"
             android:id="@+id/info"
             android:gravity="center"
-            android:background="#DA5F6A"
+            android:background="@color/colorPrimary"
             android:scaleType="fitCenter" />
 
         <TextView

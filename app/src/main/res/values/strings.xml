@@ -5,6 +5,10 @@
     <string name="number_tab1">اعداد</string>
     <string name="action_settings">Settings</string>
     <string name="message_conformation">Do you want to do the test?\n آیا می خواهید تست انجام دهید؟</string>
+    <string name="mes_no_field">این نمی تواند خالی باشد this can\n't be empty \n</string>
+    <string name="mes_save_record">Recording saved successfully. \n ضبط با موفقیت ذخیره شد</string>
+    <string name="test_completed"> شما با موفقیت آزمایش را انجام دادید آیا می خواهید به مرحله بعدی بروید؟</string>
+    <string name="title_dialog"> بسیاعالی </string>
 
 
 

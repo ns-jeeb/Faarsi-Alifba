@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements AnswerItemFragmen
             mAdapter.notifyDataSetChanged();
             if (mEmptyList.size()== 34){
                 Toast.makeText(this,"Good Job you successfully completed the test",Toast.LENGTH_LONG).show();
-                new AlertDialog.Builder(context).setTitle("بسیاعالی ")
-                        .setMessage(" شما با موفقیت آزمایش را انجام دادید آیا می خواهید به مرحله بعدی بروید؟")
+                new AlertDialog.Builder(context).setTitle(String.valueOf(getString(R.string.title_dialog)))
+                        .setMessage(String.valueOf(getString(R.string.test_completed)))
                         .setPositiveButton("بلی", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

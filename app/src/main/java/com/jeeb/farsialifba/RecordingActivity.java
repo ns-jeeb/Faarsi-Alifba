@@ -4,11 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -125,7 +127,7 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
     }
     public boolean isEditTextChecked(){
         if (mBinding.edTxtRecordedName.getText().toString().isEmpty()) {
-            mBinding.edTxtRecordedName.setError("این نمی تواند خالی باشد this can't be empty");
+            mBinding.edTxtRecordedName.setError(String.valueOf(getString(R.string.mes_no_field)));
            return false;
         }else {
             mRecordeName = mBinding.edTxtRecordedName.getText().toString();
@@ -158,7 +160,6 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         Log.d("filename",mFileName);
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
         try {
             mRecorder.prepare();
             mRecorder.start();
@@ -188,7 +189,7 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         mBinding.chronometerTimer.stop();
         mBinding.chronometerTimer.setBase(SystemClock.elapsedRealtime());
         //showing the play button
-        Toast.makeText(this, "Recording saved successfully.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, String.valueOf(getString(R.string.mes_save_record)), Toast.LENGTH_SHORT).show();
         mBinding.edTxtRecordedName.setText(null);
     }
 

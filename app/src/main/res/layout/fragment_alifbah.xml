@@ -7,10 +7,12 @@
               tools:context="com.jeeb.farsialifba.MainActivity">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:id="@+id/ani_alif"
-        android:textSize="80sp"
+        android:background="@color/hain"
+        android:layout_above="@+id/mylist"
+        android:textSize="100sp"
         />
 
     <GridView
@@ -20,7 +22,7 @@
         android:numColumns="6"
         android:horizontalSpacing="0dp"
         android:verticalSpacing="0dp"
-        android:layout_below="@+id/ani_alif"
+        android:layout_above="@+id/btn_practise"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/mylist"/>
 
