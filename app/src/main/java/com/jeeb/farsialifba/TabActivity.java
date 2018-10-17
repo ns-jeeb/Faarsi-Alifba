@@ -14,6 +14,9 @@ import android.view.MenuItem;
 
 import com.jeeb.farsialifba.adapters.TabPagerAdapter;
 import com.crashlytics.android.Crashlytics;
+
+import java.util.Date;
+
 import io.fabric.sdk.android.Fabric;
 
 public class TabActivity extends AppCompatActivity {
@@ -28,6 +31,9 @@ public class TabActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.alifbah_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.number_tab1));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        Date date = new Date();
+        long dateInMili = date.getTime();
 
         final ViewPager viewPager = findViewById(R.id.pager);
         PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());

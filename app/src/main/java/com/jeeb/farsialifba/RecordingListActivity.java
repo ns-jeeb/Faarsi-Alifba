@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.jeeb.farsialifba.adapters.RecordingAdapter;
 import com.jeeb.farsialifba.model.Recording;
 
@@ -48,9 +49,18 @@ public class RecordingListActivity extends AppCompatActivity implements Recordin
         }
 
         /** setting up recyclerView **/
+
         recyclerViewRecordings = findViewById(R.id.recording_recycler);
         recyclerViewRecordings.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         recyclerViewRecordings.setHasFixedSize(true);
+//        final LottieAnimationView lottieView = (LottieAnimationView)findViewById(R.id.emoji_talk);
+//        lottieView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                lottieView.playAnimation();
+////                lottieView.cancelAnimation();
+//
+//            }});
 
         textViewNoRecordings = findViewById(R.id.textViewNoRecordings);
 
@@ -129,7 +139,6 @@ public class RecordingListActivity extends AppCompatActivity implements Recordin
     @Override
     public void onRecordedItemListener(View view, int position, Recording recording) {
         Toast.makeText(this,""+position+recording.getFileName(),Toast.LENGTH_LONG).show();
-
     }
 
 }

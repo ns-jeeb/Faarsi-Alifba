@@ -3,6 +3,7 @@ package com.jeeb.farsialifba.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeeb.farsialifba.R;
 import com.jeeb.farsialifba.model.Recording;
@@ -146,7 +148,9 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
                 @Override
                 public void onClick(View view) {
                     recording = mRecordings.get(getAdapterPosition());
-                    deleteTruck(recording.getFileName());
+                    mRecordings.remove(getAdapterPosition());
+                    deleteTruck(recording.getFileName(),getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
                 }
             });
         }
@@ -213,7 +217,7 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void deleteTruck(String nameFile){
+    private void deleteTruck(String nameFile,int position){
         File root = android.os.Environment.getExternalStorageDirectory();
         String path = root.getAbsolutePath() + "/AlifBah_Records/Audios";
         Log.d("Files", "Path: " + path);
@@ -223,7 +227,9 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
 
             boolean isDeleted = false;
             try{
-                isDeleted =files[0].delete();
+                if (files[position].exists()){
+                    isDeleted =files[position].delete();
+                }
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -231,6 +237,9 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
                 if (isDeleted){
                     notifyDataSetChanged();
                 }
+            }
+            if (isDeleted){
+                notifyItemRemoved(position);
             }
         }
     }

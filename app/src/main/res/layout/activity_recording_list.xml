@@ -22,6 +22,14 @@
             android:layout_centerInParent="true"
             android:textColor="@android:color/darker_gray"
             />
+        <!--<com.airbnb.lottie.LottieAnimationView-->
+
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--app:lottie_autoPlay="true"-->
+            <!--android:id="@+id/emoji_talk"-->
+            <!--app:lottie_fileName="data.json"/>-->
+
 
     </android.support.constraint.ConstraintLayout>
 </layout>

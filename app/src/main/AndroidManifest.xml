@@ -21,13 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".RecordingActivity">
-        </activity>
+
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".RecordingActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".RecordingListActivity"
-            android:label="@string/title_activity_recording_list">
-        </activity>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_recording_list"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd7d8d4baa5fb14896b8482b7d2be5d3c24bff2c" />
