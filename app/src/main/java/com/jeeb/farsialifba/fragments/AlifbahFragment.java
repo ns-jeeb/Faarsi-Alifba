@@ -5,13 +5,17 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,9 +36,13 @@ import com.jeeb.farsialifba.media.PlayAudioAlifBa;
 import com.jeeb.farsialifba.media.UtilAndKeys;
 import com.jeeb.farsialifba.model.AlifBah;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
+import io.fabric.sdk.android.Kit;
 
 import static com.jeeb.farsialifba.media.UtilAndKeys.KEY_AH;
 import static com.jeeb.farsialifba.media.UtilAndKeys.KEY_ALIF;
@@ -222,10 +230,28 @@ public class AlifbahFragment extends Fragment implements View.OnClickListener {
         mTxtAlifba.setBackgroundColor(getResources().getColor(bgColor));
         mTxtAlifba.startAnimation(AnimationUtils.loadAnimation(getActivity(), animSide));
     }
-
+    public Typeface createFont (String font, int style) {
+        Typeface typeface;
+        try {
+            AssetManager assets = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                assets = Objects.requireNonNull(getContext()).getAssets();
+            }
+            typeface = Typeface.createFromAsset( assets, "fonts" + File.separator + font );
+        }
+        catch (RuntimeException e) {
+            // createFromAsset() will throw a RuntimeException in case of error.
+            Log.e("", "Unable to create font: " + font, e );
+            typeface = Typeface.defaultFromStyle( style );
+        }
+        return typeface;
+    }
     @Override
     public void onClick(View view) {
 
+        createFont( "helvetica.ttf" , Typeface.NORMAL );
+        createFont( "helveticab.ttf", Typeface.BOLD   );
+        createFont( "Times new Roman.ttf", Typeface.BOLD);
         ViewDialog viewDialog = new ViewDialog();
         viewDialog.showDialog(getActivity(),getString(R.string.message_conformation));
 
@@ -451,9 +477,9 @@ public class AlifbahFragment extends Fragment implements View.OnClickListener {
             dialogNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(getContext(), RecordingActivity.class);
-                    startActivity(intent);
+//                    dialog.dismiss();
+//                    Intent intent = new Intent(getContext(), RecordingActivity.class);
+//                    startActivity(intent);
 
                     shouldDoExcersize = false;
                 }
