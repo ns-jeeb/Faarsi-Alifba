@@ -17,6 +17,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Menu;
@@ -24,14 +26,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeb.farsialifba.adapters.RecordingAdapter;
 import com.jeeb.farsialifba.databinding.ActivityRecordingBinding;
+import com.jeeb.farsialifba.model.Recording;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class RecordingActivity extends AppCompatActivity implements View.OnClickListener{
+public class RecordingActivity extends AppCompatActivity implements View.OnClickListener, RecordingAdapter.OnRecordItemClickListener{
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int RECORD_AUDIO_REQUEST_CODE = 200;
@@ -42,8 +48,11 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
     private int mLastProgress;
     private ActivityRecordingBinding mBinding;
     private Handler mHandler = new Handler();
-    private boolean isPlaying;
     private String mRecordeName;
+    private Recording recording;
+
+    private ArrayList<Recording> recordingArraylist;
+    private RecordingAdapter recordingAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void getPermissionTorecordAudio(){
@@ -71,20 +80,30 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPermissionTorecordAudio();
         }
+        recordingArraylist = new ArrayList<>();
+
 
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_recording);
         mBinding.chronometerTimer.setBase(SystemClock.elapsedRealtime());
 
-        mBinding.imageViewPlay.setOnClickListener(this);
+//        mBinding.imageViewPlay.setOnClickListener(this);
         mBinding.imageViewStop.setOnClickListener(this);
         mBinding.imageViewRecord.setOnClickListener(this);
-        mBinding.btnDisplayItems.setOnClickListener(this);
+
+        fetchRecordings();
+        setAdaptertoRecyclerView();
+        if (recordingArraylist.size()> 0){
+            mBinding.txtNoDataMessage.setVisibility(View.GONE);
+        }else {
+            mBinding.txtNoDataMessage.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -94,6 +113,53 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+
+    private void fetchRecordings() {
+
+        File root = android.os.Environment.getExternalStorageDirectory();
+        if (root != null){
+            String path = root.getAbsolutePath() + "/AlifBah_Records/Audios";
+            Log.d("Files", "Path: " + path);
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+            if (files != null) {
+                updateRecordingList(files, root);
+            }
+
+        }
+    }
+
+    public void updateRecordingList(File[]files,File root){
+        for (File file : files) {
+            Log.d("Files", "FileName:" + file.getName());
+            String fileName = file.getName();
+            String recordingUri = root.getAbsolutePath() + "/AlifBah_Records/Audios/" + fileName;
+
+            recording = new Recording(recordingUri, fileName, false);
+            recordingArraylist.add(recording);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        fetchRecordings();
+    }
+
+    private void setAdaptertoRecyclerView() {
+        recordingAdapter = new RecordingAdapter(this,recordingArraylist);
+        mBinding.recordingRecycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        mBinding.recordingRecycler.setHasFixedSize(true);
+
+        getWindow().
+                getDecorView().
+                setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        recordingAdapter.setRecordItemClickListener(this);
+        mBinding.recordingRecycler.setAdapter(recordingAdapter);
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
@@ -101,20 +167,26 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         if (view == mBinding.imageViewRecord && isEditTextChecked()) {
             prepareForRecording();
             startRecording();
-        } else if (view == mBinding.imageViewStop) {
+        }
+        else if (view == mBinding.imageViewStop) {
             prepareStop();
             stopRecording();
-        } else if (view == mBinding.imageViewPlay) {
-            if (!isPlaying && mFileName != null) {
-                isPlaying = true;
-                startPlaying();
-            } else {
-                isPlaying = false;
-                stopPlaying();
+            File root = android.os.Environment.getExternalStorageDirectory();
+            if (root != null){
+                String path = root.getAbsolutePath() + "/AlifBah_Records/Audios";
+                Log.d("Files", "Path: " + path);
+                File directory = new File(path);
+                File[] files = directory.listFiles();
+
+                for (File file: files){
+                    if (file.getName().equalsIgnoreCase(mBinding.edTxtRecordedName.getText().toString())){
+                        Recording tempRecording = new Recording(file.getAbsolutePath(),file.getName(),false);
+                        recordingArraylist.add(tempRecording);
+                        recordingAdapter.notifyDataSetChanged();
+                    }
+                }
             }
-        }else if (view == mBinding.btnDisplayItems){
-            Intent intent = new Intent(this, RecordingListActivity.class);
-            startActivityForResult(intent,REQUEST_CODE_RECORDING);
+            mBinding.edTxtRecordedName.setText(null);
         }
     }
 
@@ -123,7 +195,7 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         TransitionManager.beginDelayedTransition(mBinding.linearLayoutRecorder);
         mBinding.imageViewRecord.setVisibility(View.GONE);
         mBinding.imageViewStop.setVisibility(View.VISIBLE);
-        mBinding.linearLayoutPlay.setVisibility(View.GONE);
+//        mBinding.linearLayoutPlay.setVisibility(View.GONE);
     }
     public boolean isEditTextChecked(){
         if (mBinding.edTxtRecordedName.getText().toString().isEmpty()) {
@@ -139,8 +211,8 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
     private void prepareStop() {
         TransitionManager.beginDelayedTransition(mBinding.linearLayoutRecorder);
         mBinding.imageViewRecord.setVisibility(View.VISIBLE);
-        mBinding.imageViewStop.setVisibility(View.GONE);
-        mBinding.linearLayoutPlay.setVisibility(View.VISIBLE);
+//        mBinding.imageViewStop.setVisibility(View.GONE);
+//        mBinding.linearLayoutPlay.setVisibility(View.VISIBLE);
     }
 
     private void startRecording() {
@@ -167,8 +239,8 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
         mLastProgress = 0;
-        mBinding.btnDisplayItems.setEnabled(true);
-        mBinding.seekBar.setProgress(0);
+//        mBinding.btnDisplayItems.setEnabled(true);
+//        mBinding.seekBar.setProgress(0);
         stopPlaying();
         //starting the chronometer
         mBinding.chronometerTimer.setBase(SystemClock.elapsedRealtime());
@@ -190,7 +262,7 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         mBinding.chronometerTimer.setBase(SystemClock.elapsedRealtime());
         //showing the play button
         Toast.makeText(this, String.valueOf(getString(R.string.mes_save_record)), Toast.LENGTH_SHORT).show();
-        mBinding.edTxtRecordedName.setText(null);
+        mBinding.imageViewStop.setVisibility(View.GONE);
     }
 
     private void stopPlaying() {
@@ -201,62 +273,62 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         }
         mPlayer = null;
         //showing the play button
-        mBinding.imageViewPlay.setImageResource(R.drawable.ic_shortcut_play_circle_outline);
+//        mBinding.imageViewPlay.setImageResource(R.drawable.ic_shortcut_play_circle_outline);
         mBinding.chronometerTimer.stop();
     }
 
-    private void startPlaying() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(mFileName);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            Log.e("LOG_TAG", "prepare() failed");
-        }
-        //making the imageview pause button
-        mBinding.imageViewPlay.setImageResource(R.drawable.ic_shortcut_stop);
-
-        mBinding.seekBar.setProgress(mLastProgress);
-        mPlayer.seekTo(mLastProgress);
-        mBinding.seekBar.setMax(mPlayer.getDuration());
-        seekUpdation();
-        mBinding.chronometerTimer.start();
-
-        /** once the audio is complete, timer is stopped here**/
-        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mBinding.imageViewPlay.setImageResource(R.drawable.ic_shortcut_play_circle_outline);
-                isPlaying = false;
-                mBinding.chronometerTimer.stop();
-            }
-        });
-
-        /** moving the track as per the seekBar's position**/
-        mBinding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if( mPlayer!=null && fromUser ){
-                    //here the track's progress is being changed as per the progress bar
-                    mPlayer.seekTo(progress);
-                    //timer is being updated as per the progress of the seekbar
-                    mBinding.chronometerTimer.setBase(SystemClock.elapsedRealtime() - mPlayer.getCurrentPosition());
-                    mLastProgress = progress;
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-    }
+//    private void startPlaying() {
+//        mPlayer = new MediaPlayer();
+//        try {
+//            mPlayer.setDataSource(mFileName);
+//            mPlayer.prepare();
+//            mPlayer.start();
+//        } catch (IOException e) {
+//            Log.e("LOG_TAG", "prepare() failed");
+//        }
+//        //making the imageview pause button
+//        mBinding.imageViewPlay.setImageResource(R.drawable.ic_shortcut_stop);
+//
+//        mBinding.seekBar.setProgress(mLastProgress);
+//        mPlayer.seekTo(mLastProgress);
+//        mBinding.seekBar.setMax(mPlayer.getDuration());
+//        seekUpdation();
+//        mBinding.chronometerTimer.start();
+//
+//        /** once the audio is complete, timer is stopped here**/
+//        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                mBinding.imageViewPlay.setImageResource(R.drawable.ic_shortcut_play_circle_outline);
+//                isPlaying = false;
+//                mBinding.chronometerTimer.stop();
+//            }
+//        });
+//
+//        /** moving the track as per the seekBar's position**/
+//        mBinding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                if( mPlayer!=null && fromUser ){
+//                    //here the track's progress is being changed as per the progress bar
+//                    mPlayer.seekTo(progress);
+//                    //timer is being updated as per the progress of the seekbar
+//                    mBinding.chronometerTimer.setBase(SystemClock.elapsedRealtime() - mPlayer.getCurrentPosition());
+//                    mLastProgress = progress;
+//                }
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
+//    }
 
     Runnable runnable = new Runnable() {
         @Override
@@ -268,7 +340,7 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
     private void seekUpdation() {
         if(mPlayer != null){
             int mCurrentPosition = mPlayer.getCurrentPosition() ;
-            mBinding.seekBar.setProgress(mCurrentPosition);
+//            mBinding.seekBar.setProgress(mCurrentPosition);
             mLastProgress = mCurrentPosition;
         }
         mHandler.postDelayed(runnable, 100);
@@ -287,8 +359,7 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
 
         switch (item.getItemId()){
             case R.id.action_settings:
-                Intent intent = new Intent(this, RecordingListActivity.class);
-                startActivityForResult(intent,REQUEST_CODE_RECORDING);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -298,19 +369,11 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE_RECORDING) {
-            if (resultCode == 1) {
-                mBinding.txtNoDataMessage.setVisibility(View.VISIBLE);
-                mBinding.btnDisplayItems.setEnabled(false);
-            } else {
-                mBinding.txtNoDataMessage.setVisibility(View.GONE);
-                mBinding.btnDisplayItems.setEnabled(true);
-
-            }
+    public void onRecordedItemListener(View view, int position, Recording recording) {
+        if (position<= 0){
+            mBinding.txtNoDataMessage.setVisibility(View.VISIBLE);
+        }else {
+            mBinding.txtNoDataMessage.setVisibility(View.GONE);
         }
     }
-
 }

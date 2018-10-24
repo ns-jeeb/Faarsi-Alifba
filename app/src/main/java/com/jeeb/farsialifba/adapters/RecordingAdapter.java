@@ -35,6 +35,7 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
     private Handler mHandler = new Handler();
     private ViewHolder mHolder;
     private String mRecordingUri;
+    private int mPosition;
     private int mLastProgress = 0;
 
     public void setRecordItemClickListener(OnRecordItemClickListener recordItemClickListener) {
@@ -71,7 +72,7 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
 
         Recording recording = mRecordings.get(position);
         holder.mTxtRecoringName.setText(recording.getFileName());
-
+        mPosition = position;
         if(recording.isPlaying()){
             holder.mImageViewPlay.setImageResource(R.drawable.ic_shortcut_stop);
             TransitionManager.beginDelayedTransition((ViewGroup) holder.itemView);
@@ -107,7 +108,6 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
                     int position = getAdapterPosition();
                     recording = mRecordings.get(position);
                     mRecordingUri = recording.getUri();
-                    mRecordItemClickListener.onRecordedItemListener(view,position,recording);
                     if( !isPlaying ){
                         stopPlaying();
                         if( position == last_index ){
@@ -147,10 +147,14 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onClick(View view) {
-                    recording = mRecordings.get(getAdapterPosition());
-                    mRecordings.remove(getAdapterPosition());
-                    deleteTruck(recording.getFileName(),getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
+                    if (getAdapterPosition() >=0){
+                        recording = mRecordings.get(mPosition);
+                        mRecordings.remove(mPosition);
+                        deleteTruck(recording.getFileName(),mPosition);
+                        notifyItemRemoved(getAdapterPosition());
+                        mRecordItemClickListener.onRecordedItemListener(view,mRecordings.size(),recording);
+                    }
+
                 }
             });
         }
