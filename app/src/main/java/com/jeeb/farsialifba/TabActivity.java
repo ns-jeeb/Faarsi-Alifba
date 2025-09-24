@@ -1,30 +1,25 @@
 package com.jeeb.farsialifba;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.jeeb.farsialifba.adapters.TabPagerAdapter;
-import com.crashlytics.android.Crashlytics;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Date;
 
-import io.fabric.sdk.android.Fabric;
 
 public class TabActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.tab_fragments);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -36,7 +31,17 @@ public class TabActivity extends AppCompatActivity {
         long dateInMili = date.getTime();
 
         final ViewPager viewPager = findViewById(R.id.pager);
-        PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        PagerAdapter adapter = new PagerAdapter() {
+            @Override
+            public int getCount() {
+                return 0;
+            }
+
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+                return false;
+            }
+        };
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

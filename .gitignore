@@ -1,8 +1,80 @@
-*.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
+# Android Studio / IntelliJ
+    .idea/
+    *.iml
+    *.ipr
+    *.iws
+    modules.xml
+    # Keep the following .idea files if you want to share them
+    # !.idea/copyright/
+    # !.idea/dictionaries/
+    # !.idea/inspectionProfiles/
+    # !.idea/vcs.xml # If you want to share VCS root mapping
+
+    # Build files
+    build/
+    */build/
+
+    # Local configuration properties (sdk.dir, keystore info, etc.)
+    local.properties
+
+    # Gradle files
+    .gradle/
+    gradlew
+    gradlew.bat
+    # You might want to keep gradlew and gradlew.bat if you want others
+    # to be able to build the project without installing Gradle separately.
+    # If so, comment out the two lines above.
+
+    # Keystore files (NEVER commit these!)
+    *.jks
+    *.keystore
+    *.pem
+
+    # Log files
+    *.log
+
+    # APK/AAB files
+    *.apk
+    *.aab
+    *.ap_
+
+    # Instant App bundles
+    *.zip
+
+    # Profiler & Heap Dump
+    *.hprof
+    *.snapshot
+    captures/
+    *.jfr
+
+    # Lint
+    lint/reports/
+    lint-results-*.xml
+    lint-results-*.html
+
+    # Firebase / Crashlytics
+    google-services.json # If you download it manually and don't want to commit if it contains sensitive info for a public repo.
+                         # Often, it's fine to commit for private repos or if it doesn't contain secrets.
+                         # If you use different google-services.json for different build types/flavors, you might commit a template
+                         # and have the actual one generated or copied by your CI/CD.
+    crashlytics-build.properties
+
+    # KSP generated files (if not needed in VCS)
+    # Adjust based on your KSP output directories if necessary
+    app/build/generated/ksp/
+
+    # DataBinding / ViewBinding generated files (usually covered by build/)
+    # But can be explicitly added if needed for some reason
+    # app/build/generated/data_binding_base_class_source_out/
+    # app/build/generated/source/dataBinding/
+
+    # Environment-specific configuration files (if you use them)
+    # secrets.properties
+
+    # OS-specific files
+    .DS_Store
+    Thumbs.db
+    Desktop.ini
+
+    # Cocoapods (if you have any Kotlin Multiplatform involvement)
+    # Pods/

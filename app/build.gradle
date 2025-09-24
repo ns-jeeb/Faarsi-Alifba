@@ -1,71 +1,75 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    // alias(libs.plugins.kotlin.compose)
 
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
+    alias(libs.plugins.google.gms.services) // APPLY the plugin
+    alias(libs.plugins.firebase.crashlytics.gradle) // APPLY the plugin
+
+    id("com.google.devtools.ksp")
 }
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'alias_name'
-            keyPassword 'gullegull'
-            storeFile file('C:/Users/Jeeb/keystore/my-release-key.keystore')
-            storePassword 'gullegull'
-        }
+    namespace = "com.jeeb.farsialifba"
+//    signingConfigs {
+//        config {
+//            keyAlias 'alias_name'
+//            keyPassword 'gullegull'
+//            storeFile file('C:/Users/Jeeb/keystore/my-release-key.keystore')
+//            storePassword 'gullegull'
+//        }
+//    }
+    buildFeatures {
+        //noinspection DataBindingWithoutKapt
+        dataBinding = true
     }
-    dataBinding {
-        enabled = true
-    }
-    compileSdkVersion 28
-    buildToolsVersion '27.0.3'
+    compileSdk = 35
     defaultConfig {
         applicationId "com.jeeb.farsialifba"
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 8
-        versionName "1.1.8"
-    }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
-        }
-        debug {
-            useProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
-                    'proguard-rules.pro'
-        }
-    }
-}
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
 
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.config
+//        }
+//        debug {
+//            useProguard true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+//                    'proguard-rules.pro'
+//        }
+//    }
+}
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.airbnb.android:lottie:2.5.5'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
-    implementation 'com.google.android:flexbox:1.1.0'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-        transitive = true;
+    implementation fileTree(include: ['*.jar'], dir: 'libs') // Only if you actually have JARs in the libs folder
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.material    // Replaces libs.design
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.cardview
+    implementation libs.androidx.constraintlayout // Replaces libs.constraint.layout
+
+    implementation libs.lottie
+    implementation libs.picasso
+    // implementation libs.support.v4 // DEFINITELY REMOVE THIS
+
+    testImplementation libs.junit
+    implementation libs.play.services.maps
+    // implementation libs.flexbox // Uncomment if you add flexbox to your TOML and need it (ensure it's an AndroidX compatible version or doesn't bring in support libs)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }

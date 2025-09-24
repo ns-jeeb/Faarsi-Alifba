@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/container"
         android:orientation="vertical"
         tools:context="com.jeeb.farsialifba.MainActivity">
 
-               <TextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="الفبای زیر را به ترتیب قرار دهید با کلیک روی حروفها درست"
@@ -46,7 +46,7 @@
             app:layout_constraintHeight_default="percent"
             android:id="@+id/answer_layout"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
 

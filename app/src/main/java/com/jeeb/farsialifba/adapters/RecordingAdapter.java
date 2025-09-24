@@ -1,14 +1,9 @@
 package com.jeeb.farsialifba.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jeeb.farsialifba.R;
 import com.jeeb.farsialifba.model.Recording;
@@ -49,16 +46,14 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
         mRecordings = recordings;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.recording_item_layout,viewGroup,false);
         return new ViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
         setUpData(viewHolder,i);
     }
 
@@ -67,7 +62,6 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
         return mRecordings.size();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setUpData(ViewHolder holder, int position) {
 
         Recording recording = mRecordings.get(position);
@@ -94,7 +88,7 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
 
         Recording recording;
 
-        public ViewHolder(@NonNull final View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             mImageViewPlay = itemView.findViewById(R.id.imageViewPlay);
             mImageViewDelete = itemView.findViewById(R.id.imageViewDelete);
@@ -144,7 +138,6 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.View
 
             });
             mImageViewDelete.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onClick(View view) {
                     if (getAdapterPosition() >=0){

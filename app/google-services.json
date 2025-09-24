@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "605705525768",
+    "project_id": "farsi-alphabet-alifbah-farsi",
+    "storage_bucket": "farsi-alphabet-alifbah-farsi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605705525768:android:642348513490d598898fbd",
+        "android_client_info": {
+          "package_name": "com.jeeb.farsialifba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK44EU2NQQPpyJ8SduNbAolfSTrey0EcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

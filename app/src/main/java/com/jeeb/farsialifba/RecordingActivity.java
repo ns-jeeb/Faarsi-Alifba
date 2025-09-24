@@ -1,33 +1,26 @@
 package com.jeeb.farsialifba;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
-import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.jeeb.farsialifba.adapters.RecordingAdapter;
 import com.jeeb.farsialifba.databinding.ActivityRecordingBinding;
@@ -354,19 +347,19 @@ public class RecordingActivity extends AppCompatActivity implements View.OnClick
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.action_settings:
+//        switch (item.getItemId()){
+//            case R.id.action_settings:
+//
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//
+//        }
 
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
-
-    }
+//    }
 
     @Override
     public void onRecordedItemListener(View view, int position, Recording recording) {

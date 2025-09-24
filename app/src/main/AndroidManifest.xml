@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TabActivity"
-                  android:screenOrientation="portrait">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,10 +29,6 @@
         <activity android:name=".RecordingActivity"
             android:screenOrientation="portrait"/>
 
-        <activity
-            android:name=".RecordingListActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_recording_list"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd7d8d4baa5fb14896b8482b7d2be5d3c24bff2c" />

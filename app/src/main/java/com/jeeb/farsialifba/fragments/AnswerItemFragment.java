@@ -1,15 +1,15 @@
 package com.jeeb.farsialifba.fragments;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jeeb.farsialifba.MainActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.jeeb.farsialifba.R;
 import com.jeeb.farsialifba.adapters.AnswerItemRecyclerViewAdapter;
 import com.jeeb.farsialifba.databinding.FragmentAnswerListBinding;
@@ -56,8 +56,8 @@ public class AnswerItemFragment extends Fragment {
         Collections.shuffle(answerList);
 
         AnswerItemRecyclerViewAdapter adapter = new AnswerItemRecyclerViewAdapter(answerList, mListener);
-        mBinding.answerList.setLayoutManager(new GridLayoutManager(getActivity(), mColumnCount));
-        mBinding.answerList.setHasFixedSize(true);
+
+
         mBinding.answerList.setAdapter(adapter);
         return mBinding.getRoot();
     }
