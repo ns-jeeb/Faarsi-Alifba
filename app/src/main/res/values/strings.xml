@@ -93,4 +93,5 @@
         <item>۴۰</item>
     </string-array>
     <string name="title_activity_recording_list">RecordingListActivity</string>
+    <string name="title_activity_main_activitykt">MainActivitykt</string>
 </resources>
