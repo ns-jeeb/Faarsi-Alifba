@@ -57,11 +57,7 @@ gitignore
     # google-services.json # Decide if you want to commit this based on public/private repo
     crashlytics-build.properties
 
-    # KSP generated files (if not needed in VCS)
-    # Adjust based on your KSP output directories if necessary
-    # app/build/generated/ksp/
 
-    # OS-specific files
     .DS_Store
     Thumbs.db
     Desktop.ini
