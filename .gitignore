@@ -1,4 +1,5 @@
-# Android Studio / IntelliJ
+gitignore
+    # Android Studio / IntelliJ
     .idea/
     *.iml
     *.ipr
@@ -53,28 +54,14 @@
     lint-results-*.html
 
     # Firebase / Crashlytics
-    google-services.json # If you download it manually and don't want to commit if it contains sensitive info for a public repo.
-                         # Often, it's fine to commit for private repos or if it doesn't contain secrets.
-                         # If you use different google-services.json for different build types/flavors, you might commit a template
-                         # and have the actual one generated or copied by your CI/CD.
+    # google-services.json # Decide if you want to commit this based on public/private repo
     crashlytics-build.properties
 
     # KSP generated files (if not needed in VCS)
     # Adjust based on your KSP output directories if necessary
-    app/build/generated/ksp/
-
-    # DataBinding / ViewBinding generated files (usually covered by build/)
-    # But can be explicitly added if needed for some reason
-    # app/build/generated/data_binding_base_class_source_out/
-    # app/build/generated/source/dataBinding/
-
-    # Environment-specific configuration files (if you use them)
-    # secrets.properties
+    # app/build/generated/ksp/
 
     # OS-specific files
     .DS_Store
     Thumbs.db
     Desktop.ini
-
-    # Cocoapods (if you have any Kotlin Multiplatform involvement)
-    # Pods/
