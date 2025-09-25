@@ -19,9 +19,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.jeeb.farsialifba.MainActivity;
 import com.jeeb.farsialifba.R;
-import com.jeeb.farsialifba.RecordingActivity;
 import com.jeeb.farsialifba.media.PlayAudioAlifBa;
 import com.jeeb.farsialifba.media.UtilAndKeys;
 
@@ -431,8 +429,6 @@ public class AlifbahFragment extends Fragment implements View.OnClickListener {
                     fragmentTags.add(UtilAndKeys.KEY_FRAGMENT_TAG_ANSWER);
                     fragmentTags.add(UtilAndKeys.KEY_FRAGMENT_TAG_QUESTION);
 
-                    intent = MainActivity.newIntent(getActivity(), fragmentTags);
-
                     startActivity(intent);
                     dialog.dismiss();
                 }
@@ -443,8 +439,7 @@ public class AlifbahFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    Intent intent = new Intent(getContext(), RecordingActivity.class);
-                    startActivity(intent);
+
 
                     shouldDoExcersize = false;
                 }
