@@ -12,7 +12,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.jeeb.farsialifba.R;
-import com.jeeb.farsialifba.RecordingActivity;
 import com.jeeb.farsialifba.adapters.AlifBahAdapter;
 import com.jeeb.farsialifba.media.PlayAudioAlifBa;
 
@@ -335,7 +334,5 @@ public class NumberFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-//        Intent intent = new Intent(getActivity(), RecordingActivity.class);
-//        startActivity(intent);
     }
 }
