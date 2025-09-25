@@ -69,8 +69,7 @@ class MainActivity : ComponentActivity() {
 
 data class FarsiLetter(val letter: String, val name: String, val audioResId: Int, val emoji: String)
 private val alphabetData = listOf(
-    FarsiLetter("آ", "الف", R.raw.alif, "💧"),
-    FarsiLetter("ا", "الف", R.raw.alif, "👨‍👨‍👧‍👦"),
+    FarsiLetter("ا", "الف", R.raw.m_alif, "👨‍👨‍👧‍👦"),
     FarsiLetter("ب", "ب", R.raw.baa, "☔️"),
     FarsiLetter("پ", "پ", R.raw.paye, "🦋"),
     FarsiLetter("ت", "ت", R.raw.ta, "⚽️"),
