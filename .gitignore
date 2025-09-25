@@ -1,62 +1,37 @@
-gitignore
-    # Android Studio / IntelliJ
-    .idea/
-    *.iml
-    *.ipr
-    *.iws
-    modules.xml
-    # Keep the following .idea files if you want to share them
-    # !.idea/copyright/
-    # !.idea/dictionaries/
-    # !.idea/inspectionProfiles/
-    # !.idea/vcs.xml # If you want to share VCS root mapping
 
-    # Build files
-    build/
-    */build/
-
-    # Local configuration properties (sdk.dir, keystore info, etc.)
-    local.properties
-
-    # Gradle files
-    .gradle/
-    gradlew
-    gradlew.bat
-    # You might want to keep gradlew and gradlew.bat if you want others
-    # to be able to build the project without installing Gradle separately.
-    # If so, comment out the two lines above.
-
-    # Keystore files (NEVER commit these!)
-    *.jks
-    *.keystore
-    *.pem
-
-    # Log files
-    *.log
-
-    # APK/AAB files
-    *.apk
-    *.aab
-    *.ap_
-
-    # Instant App bundles
-    *.zip
-
-    # Profiler & Heap Dump
+.gitignore
+.idea
+.gradle
+.gradle/
+build
+local.properties
+.idea/
+*.iml
+*.ipr
+*.iws
+build/
+gradlew
+*.jks
+#    *.keystore
+*.keystore
+#    *.pem
+*.pem
+*.aab
+*.ab_
+*.apk
+*.zip
+#    # Profiler & Heap Dump
     *.hprof
     *.snapshot
     captures/
     *.jfr
-
+#
     # Lint
     lint/reports/
     lint-results-*.xml
     lint-results-*.html
-
-    # Firebase / Crashlytics
-    # google-services.json # Decide if you want to commit this based on public/private repo
-    crashlytics-build.properties
-
+#
+crashlytics-build.properties
 
     .DS_Store
     Thumbs.db
