@@ -75,6 +75,3 @@
     .DS_Store
     Thumbs.db
     Desktop.ini
-
-    # Cocoapods (if you have any Kotlin Multiplatform involvement)
-    # Pods/
