@@ -50,24 +50,25 @@ public class MainActivity extends AppCompatActivity implements AnswerItemFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_hosting);
-        fragmentManager = getSupportFragmentManager();
-
-        AnswerItemFragment answerFrag = (AnswerItemFragment) fragmentManager.findFragmentById(R.id.answer_layout);
-
-        if (answerFrag == null) {
-            answerFrag = new AnswerItemFragment();
-        }
-        if (answerFrag.isAdded()){
-            return;
-        }
-        transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.answer_layout,answerFrag);
-        transaction.commit();
-
-        mEmptyList = new ArrayList<>();
-        mAdapter = new QueLayoutAdpter(this,mEmptyList,LayoutInflater.from(this));
-        mBinding.gridView.setAdapter(mAdapter);
+//        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_hosting);
+//        fragmentManager = getSupportFragmentManager();
+//
+//        AnswerItemFragment answerFrag = (AnswerItemFragment) fragmentManager.findFragmentById(R.id.answer_layout);
+//        mBinding.txtMessage.setText("this my message");
+//
+//        if (answerFrag == null) {
+//            answerFrag = new AnswerItemFragment();
+//        }
+//        if (answerFrag.isAdded()){
+//            return;
+//        }
+//        transaction = fragmentManager.beginTransaction();
+//        transaction.add(R.id.answer_layout,answerFrag);
+//        transaction.commit();
+//
+//        mEmptyList = new ArrayList<>();
+//        mAdapter = new QueLayoutAdpter(this,mEmptyList,LayoutInflater.from(this));
+//        mBinding.gridView.setAdapter(mAdapter);
 
 
     }

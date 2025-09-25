@@ -20,8 +20,10 @@ gradlew
 *.ab_
 *.apk
 *.zip
+*.hprof
+
 #    # Profiler & Heap Dump
-    *.hprof
+
     *.snapshot
     captures/
     *.jfr

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.jeeb.farsialifba">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jeeb.farsialifba">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,26 +14,37 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TabActivity"
+        <activity
+            android:name=".MainActivitykt"
+            android:exported="true"
+            android:label="@string/title_activity_main_activitykt"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TabActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".RecordingActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecordingActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd7d8d4baa5fb14896b8482b7d2be5d3c24bff2c" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

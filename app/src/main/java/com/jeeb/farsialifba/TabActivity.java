@@ -1,9 +1,12 @@
 package com.jeeb.farsialifba;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +34,7 @@ public class TabActivity extends AppCompatActivity {
         long dateInMili = date.getTime();
 
         final ViewPager viewPager = findViewById(R.id.pager);
+        LayoutInflater inflater = LayoutInflater.from(this);
         PagerAdapter adapter = new PagerAdapter() {
             @Override
             public int getCount() {
@@ -41,6 +45,13 @@ public class TabActivity extends AppCompatActivity {
             public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
                 return false;
             }
+            @NonNull
+            @Override
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_alifbah,
+                        container, false);
+                return layout;
+            }
         };
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -48,6 +59,7 @@ public class TabActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                Toast.makeText(TabActivity.this, "Tab: " + tab.getPosition(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
