@@ -1,4 +1,5 @@
 package com.jeeb.farsialifba
+
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -37,7 +38,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -49,10 +49,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jeeb.farsialifba.ui.theme.FaarsiAlifbaTheme
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -69,41 +74,50 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class FarsiLetter(val letter: String, val name: String, val audioResId: Int, val emoji: String, val englishName: String)
-private val alphabetData = listOf(
-    FarsiLetter("ا", "الف", R.raw.m_alif, "👨‍👨‍👧‍👦", "Alif"),
-    FarsiLetter("ب", "ب", R.raw.baa, "☔️", "Bay"),
-    FarsiLetter("پ", "پ", R.raw.paye, "🦋", "Pay"),
-    FarsiLetter("ت", "ت", R.raw.ta, "⚽️", "Tay"),
-    FarsiLetter("ث", "ث", R.raw.saya, "🍓", "Say"),
-    FarsiLetter("ج", "جیم", R.raw.jim, "🫙", "Jeem"),
-    FarsiLetter("چ", "چه", R.raw.chaye, "☂️", "Chaye"),
-    FarsiLetter("ح", "ح", R.raw.hay, "🏡", "Hay"),
-    FarsiLetter("خ", "خی", R.raw.khaye, "🏡", "Khay"),
-    FarsiLetter("د", "دال", R.raw.dol, "🦷", "Dol"),
-    FarsiLetter("ذ", "ذال", R.raw.zol, "🌽", "Zol"),
-    FarsiLetter("ر", "ری", R.raw.raye, "🚗", "Ray"),
-    FarsiLetter("ز", "زی", R.raw.zaye, "🔔", "zay"),
-    FarsiLetter("ژ", "ژی", R.raw.zghe, "🌵", "zhay"),
-    FarsiLetter("س", "سین", R.raw.sin, "🍎", "sin"),
-    FarsiLetter("ش", "شین", R.raw.shin, "🍬", "shin"),
-    FarsiLetter("ص", "صاد", R.raw.swat, "🥣", "sowt"),
-    FarsiLetter("ض", "ضاد", R.raw.zwat, "🫕", "zod"),
-    FarsiLetter("ط", "طا", R.raw.toe, "🌳", "toy"),
-    FarsiLetter("ظ", "ظا", R.raw.zoe, "🧪", "zoy"),
-    FarsiLetter("ع", "عین", R.raw.m_hain, "🦉", "ain"),
-    FarsiLetter("غ", "غین", R.raw.ghain, "🍇", "ghain"),
-    FarsiLetter("ف", "ف", R.raw.faye, "🧸", "fay"),
-    FarsiLetter("ق", "قاف", R.raw.qof, "🐥", "qhaf"),
-    FarsiLetter("ک", "کاف", R.raw.kaf, "👑", "kof"),
-    FarsiLetter("گ", "گاف", R.raw.gaf, "🥎", "gof"),
-    FarsiLetter("ل", "لام", R.raw.lom, "🍋", "lom"),
-    FarsiLetter("م", "میم", R.raw.mim, "🍌", "mim"),
-    FarsiLetter("ن", "نون", R.raw.non, "🥖", "non"),
-    FarsiLetter("و", "واو", R.raw.wow, "🧶", "wow"),
-    FarsiLetter("ه", "ه", R.raw.hamza, "📱", "hey"),
-    FarsiLetter("ی", "یا", R.raw.yah, "🧊", "yah")
+data class FarsiLetter(
+    val letter: String,
+    val name: String,
+    val audioResId: Int,
+    val emoji: String,
+    val englishName: String,
+    val emojiFarsiName: String
 )
+
+private val alphabetData = listOf(
+    FarsiLetter("ا", "الف", R.raw.m_alif, "👨‍👨‍👧‍👦", "Alif", "آدم"),
+    FarsiLetter("ب", "ب", R.raw.baa, "🌧️", "Bay", "باران"),
+    FarsiLetter("پ", "پ", R.raw.paye, "🦋", "Pay", "پروانه"),
+    FarsiLetter("ت", "ت", R.raw.ta, "⚽️", "Tay", "توپ"),
+    FarsiLetter("ث", "ث", R.raw.saya, "🍓", "Say", "ثمر"),
+    FarsiLetter("ج", "جیم", R.raw.jim, "🫙", "Jeem", "جار"),
+    FarsiLetter("چ", "چه", R.raw.chaye, "☂️", "Chaye", "چتر"),
+    FarsiLetter("ح", "ح", R.raw.hay, "🏡", "Hay", "حیاط"),
+    FarsiLetter("خ", "خی", R.raw.khaye, "🏠", "Khay", "خانه"),
+    FarsiLetter("د", "دال", R.raw.dol, "🦷", "Dol", "دندان"),
+    FarsiLetter("ذ", "ذال", R.raw.zol, "🌽", "Zol", "ذرت"),
+    FarsiLetter("ر", "ری", R.raw.raye, "🛣️", "Ray", "راه"),
+    FarsiLetter("ز", "زی", R.raw.zaye, "🔔", "Zay", "زنگ"),
+    FarsiLetter("ژ", "ژی", R.raw.zghe, "🌵", "Zhay", "ژاله"),
+    FarsiLetter("س", "سین", R.raw.sin, "🍎", "Sin", "سیب"),
+    FarsiLetter("ش", "شین", R.raw.shin, "🍬", "Shin", "شیرینی"),
+    FarsiLetter("ص", "صاد", R.raw.swat, "🧼", "Sowt", "صابون"),
+    FarsiLetter("ض", "ضاد", R.raw.zwat, "🥊", "Zod", "ضربه"),
+    FarsiLetter("ط", "طا", R.raw.toe, "🌳", "Toy", "طبیعت"),
+    FarsiLetter("ظ", "ظا", R.raw.zoe, "🏺", "Zoy", "ظرف"),
+    FarsiLetter("ع", "عین", R.raw.m_hain, "👓", "Ain", "عینک"),
+    FarsiLetter("غ", "غین", R.raw.ghain, "🍇", "Ghain", "غذا"),
+    FarsiLetter("ف", "ف", R.raw.faye, "🐘", "Fay", "فیل"),
+    FarsiLetter("ق", "قاف", R.raw.qof, "🥄", "Qhaf", "قاشق"),
+    FarsiLetter("ک", "کاف", R.raw.kaf, "📖", "Kof", "کتاب"),
+    FarsiLetter("گ", "گاف", R.raw.gaf, "🌹", "Gof", "گل"),
+    FarsiLetter("ل", "لام", R.raw.lom, "🍋", "Lom", "لیمو"),
+    FarsiLetter("م", "میم", R.raw.mim, "🍌", "Mim", "موز"),
+    FarsiLetter("ن", "نون", R.raw.non, "🥖", "Non", "نان"),
+    FarsiLetter("و", "واو", R.raw.wow, "🏋️", "Wow", "ورزش"),
+    FarsiLetter("ه", "ه", R.raw.hamza, "✈️", "Hey", "هواپیما"),
+    FarsiLetter("ی", "یا", R.raw.yah, "🧊", "Yah", "یخ")
+)
+
 @Composable
 fun FarsiAlphabetApp(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -155,129 +169,148 @@ fun FarsiAlphabetApp(modifier: Modifier = Modifier) {
         delay(500L)
         animationTrigger = false
     }
-
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Main Display Area
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 180.dp)
-                .padding(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            shape = RoundedCornerShape(24.dp)
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            // Main Display Area
+            // Main Display Area
+            Card(
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 180.dp)
                     .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                shape = RoundedCornerShape(24.dp)
             ) {
-                Row {
-                    // Main animated emoji
-                    AnimatedVisibility(
-                        visible = selectedLetterData.emoji.isNotEmpty(),
-                        enter = fadeIn(),
-                        exit = fadeOut(),
-                        modifier = Modifier.size(150.dp).graphicsLayer(scaleX = scale, scaleY = scale)
+                // The Row now correctly holds all its children
+                Row(
+                    modifier = Modifier.padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    // Column for the emoji and its new Farsi name
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.width(120.dp) // Give it some space
                     ) {
+                        AnimatedVisibility(
+                            visible = selectedLetterData.emoji.isNotEmpty(),
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                        ) {
+                            Text(
+                                text = selectedLetterData.emoji,
+                                fontSize = 80.sp,
+                                modifier = Modifier.graphicsLayer(scaleX = scale, scaleY = scale)
+                            )
+                        }
+                        // NEW: Text for the Farsi emoji name
                         Text(
-                            text = selectedLetterData.emoji,
-                            fontSize = 100.sp
+                            text = selectedLetterData.emojiFarsiName,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Gray
                         )
                     }
-                    Spacer(modifier = Modifier.width(16.dp))
 
-                    // Letter and name
+                    // Farsi Letter
                     Text(
                         text = selectedLetterData.letter,
-                        fontSize = 100.sp,
+                        fontSize = 80.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF4C51BF),
                         style = TextStyle(
                             shadow = Shadow(
                                 color = Color.Black.copy(alpha = 0.2f),
                                 blurRadius = 4f,
-                                offset = androidx.compose.ui.geometry.Offset(2f, 2f)
+                                offset = Offset(2f, 2f)
                             )
                         )
                     )
-                }
 
-                Row {
-                    Text(
-                        text = selectedLetterData.englishName,
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF6B46C1),
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
+                    // Spacer for balance
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(
-                        text = selectedLetterData.name,
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF6B46C1),
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                }
 
-            }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Play Audio Button
-        Button(
-            onClick = { playAudio(selectedLetterData.audioResId) },
-            modifier = Modifier
-                .fillMaxWidth(0.6f)
-                .height(56.dp),
-            shape = RoundedCornerShape(28.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xADE8DEC2))
-        ) {
-            Text("پخش صدا", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Alphabet Grid
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 64.dp),
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(alphabetData) { item ->
-                Card(
-                    modifier = Modifier
-                        .aspectRatio(1f)
-                        .clickable {
-                            selectedLetterData = item
-                        },
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
+                    // Column for the English and Farsi letter names
+                    Column(
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        horizontalAlignment = Alignment.Start // Align text to the left
                     ) {
                         Text(
-                            text = item.letter,
+                            text = selectedLetterData.englishName,
                             fontSize = 32.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = Color(0xFF322659)
+                            color = Color(0xFF6B46C1)
                         )
+                        // Use height for vertical spacing in a Column
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = selectedLetterData.name,
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(0xFF6B46C1)
+                        )
+                    }
+                }
+            }
+
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Play Audio Button
+            Button(
+                onClick = { playAudio(selectedLetterData.audioResId) },
+                modifier = Modifier
+                    .fillMaxWidth(0.6f)
+                    .height(56.dp),
+                shape = RoundedCornerShape(28.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xADE8DEC2))
+            ) {
+                Text("پخش صدا", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Alphabet Grid
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 64.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(alphabetData) { item ->
+                    Card(
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            .clickable {
+                                selectedLetterData = item
+                            },
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        shape = RoundedCornerShape(12.dp),
+
+                        ) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            Text(
+                                text = item.letter,
+                                fontSize = 32.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color(0xFF322659)
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
