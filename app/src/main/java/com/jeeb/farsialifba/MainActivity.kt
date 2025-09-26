@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,40 +69,40 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class FarsiLetter(val letter: String, val name: String, val audioResId: Int, val emoji: String)
+data class FarsiLetter(val letter: String, val name: String, val audioResId: Int, val emoji: String, val englishName: String)
 private val alphabetData = listOf(
-    FarsiLetter("ا", "الف", R.raw.m_alif, "👨‍👨‍👧‍👦"),
-    FarsiLetter("ب", "ب", R.raw.baa, "☔️"),
-    FarsiLetter("پ", "پ", R.raw.paye, "🦋"),
-    FarsiLetter("ت", "ت", R.raw.ta, "⚽️"),
-    FarsiLetter("ث", "ث", R.raw.saya, "🍓"),
-    FarsiLetter("ج", "جیم", R.raw.jim, "🫙"),
-    FarsiLetter("چ", "چ", R.raw.chaye, "☂️"),
-    FarsiLetter("ح", "ح", R.raw.hay, "🏡"),
-    FarsiLetter("خ", "خ", R.raw.khaye, "🏡"),
-    FarsiLetter("د", "دال", R.raw.dol, "🦷"),
-    FarsiLetter("ذ", "ذال", R.raw.zol, "🌽"),
-    FarsiLetter("ر", "ر", R.raw.raye, "🚗"),
-    FarsiLetter("ز", "ز", R.raw.zaye, "🔔"),
-    FarsiLetter("ژ", "ژ", R.raw.zghe, "🌵"),
-    FarsiLetter("س", "سین", R.raw.sin, "🍎"),
-    FarsiLetter("ش", "شین", R.raw.shin, "🍬"),
-    FarsiLetter("ص", "صاد", R.raw.swat, "🥣"),
-    FarsiLetter("ض", "ضاد", R.raw.zwat, "🫕"),
-    FarsiLetter("ط", "طا", R.raw.toe, "🌳"),
-    FarsiLetter("ظ", "ظا", R.raw.zoe, "🧪"),
-    FarsiLetter("ع", "عین", R.raw.m_hain, "🦉"),
-    FarsiLetter("غ", "غین", R.raw.ghain, "🍇"),
-    FarsiLetter("ف", "ف", R.raw.faye, "🧸"),
-    FarsiLetter("ق", "قاف", R.raw.qof, "🐥"),
-    FarsiLetter("ک", "کاف", R.raw.kaf, "👑"),
-    FarsiLetter("گ", "گاف", R.raw.gaf, "🥎"),
-    FarsiLetter("ل", "لام", R.raw.lom, "🍋"),
-    FarsiLetter("م", "میم", R.raw.mim, "🍌"),
-    FarsiLetter("ن", "نون", R.raw.non, "🥖"),
-    FarsiLetter("و", "واو", R.raw.wow, "🧶"),
-    FarsiLetter("ه", "ه", R.raw.hamza, "📱"),
-    FarsiLetter("ی", "ی", R.raw.yah, "🧊")
+    FarsiLetter("ا", "الف", R.raw.m_alif, "👨‍👨‍👧‍👦", "Alif"),
+    FarsiLetter("ب", "ب", R.raw.baa, "☔️", "Bay"),
+    FarsiLetter("پ", "پ", R.raw.paye, "🦋", "Pay"),
+    FarsiLetter("ت", "ت", R.raw.ta, "⚽️", "Tay"),
+    FarsiLetter("ث", "ث", R.raw.saya, "🍓", "Say"),
+    FarsiLetter("ج", "جیم", R.raw.jim, "🫙", "Jeem"),
+    FarsiLetter("چ", "چه", R.raw.chaye, "☂️", "Chaye"),
+    FarsiLetter("ح", "ح", R.raw.hay, "🏡", "Hay"),
+    FarsiLetter("خ", "خی", R.raw.khaye, "🏡", "Khay"),
+    FarsiLetter("د", "دال", R.raw.dol, "🦷", "Dol"),
+    FarsiLetter("ذ", "ذال", R.raw.zol, "🌽", "Zol"),
+    FarsiLetter("ر", "ری", R.raw.raye, "🚗", "Ray"),
+    FarsiLetter("ز", "زی", R.raw.zaye, "🔔", "zay"),
+    FarsiLetter("ژ", "ژی", R.raw.zghe, "🌵", "zhay"),
+    FarsiLetter("س", "سین", R.raw.sin, "🍎", "sin"),
+    FarsiLetter("ش", "شین", R.raw.shin, "🍬", "shin"),
+    FarsiLetter("ص", "صاد", R.raw.swat, "🥣", "sowt"),
+    FarsiLetter("ض", "ضاد", R.raw.zwat, "🫕", "zod"),
+    FarsiLetter("ط", "طا", R.raw.toe, "🌳", "toy"),
+    FarsiLetter("ظ", "ظا", R.raw.zoe, "🧪", "zoy"),
+    FarsiLetter("ع", "عین", R.raw.m_hain, "🦉", "ain"),
+    FarsiLetter("غ", "غین", R.raw.ghain, "🍇", "ghain"),
+    FarsiLetter("ف", "ف", R.raw.faye, "🧸", "fay"),
+    FarsiLetter("ق", "قاف", R.raw.qof, "🐥", "qhaf"),
+    FarsiLetter("ک", "کاف", R.raw.kaf, "👑", "kof"),
+    FarsiLetter("گ", "گاف", R.raw.gaf, "🥎", "gof"),
+    FarsiLetter("ل", "لام", R.raw.lom, "🍋", "lom"),
+    FarsiLetter("م", "میم", R.raw.mim, "🍌", "mim"),
+    FarsiLetter("ن", "نون", R.raw.non, "🥖", "non"),
+    FarsiLetter("و", "واو", R.raw.wow, "🧶", "wow"),
+    FarsiLetter("ه", "ه", R.raw.hamza, "📱", "hey"),
+    FarsiLetter("ی", "یا", R.raw.yah, "🧊", "yah")
 )
 @Composable
 fun FarsiAlphabetApp(modifier: Modifier = Modifier) {
@@ -173,40 +175,55 @@ fun FarsiAlphabetApp(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Main animated emoji
-                AnimatedVisibility(
-                    visible = selectedLetterData.emoji.isNotEmpty(),
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                    modifier = Modifier.size(150.dp).graphicsLayer(scaleX = scale, scaleY = scale)
-                ) {
+                Row {
+                    // Main animated emoji
+                    AnimatedVisibility(
+                        visible = selectedLetterData.emoji.isNotEmpty(),
+                        enter = fadeIn(),
+                        exit = fadeOut(),
+                        modifier = Modifier.size(150.dp).graphicsLayer(scaleX = scale, scaleY = scale)
+                    ) {
+                        Text(
+                            text = selectedLetterData.emoji,
+                            fontSize = 100.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    // Letter and name
                     Text(
-                        text = selectedLetterData.emoji,
-                        fontSize = 100.sp
+                        text = selectedLetterData.letter,
+                        fontSize = 100.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF4C51BF),
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color.Black.copy(alpha = 0.2f),
+                                blurRadius = 4f,
+                                offset = androidx.compose.ui.geometry.Offset(2f, 2f)
+                            )
+                        )
                     )
                 }
 
-                // Letter and name
-                Text(
-                    text = selectedLetterData.letter,
-                    fontSize = 100.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF4C51BF),
-                    style = TextStyle(
-                        shadow = Shadow(
-                            color = Color.Black.copy(alpha = 0.2f),
-                            blurRadius = 4f,
-                            offset = androidx.compose.ui.geometry.Offset(2f, 2f)
-                        )
+                Row {
+                    Text(
+                        text = selectedLetterData.englishName,
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF6B46C1),
+                        modifier = Modifier.padding(top = 8.dp)
                     )
-                )
-                Text(
-                    text = selectedLetterData.name,
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF6B46C1),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = selectedLetterData.name,
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF6B46C1),
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+
             }
         }
 
@@ -219,7 +236,7 @@ fun FarsiAlphabetApp(modifier: Modifier = Modifier) {
                 .fillMaxWidth(0.6f)
                 .height(56.dp),
             shape = RoundedCornerShape(28.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6B46C1))
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xADE8DEC2))
         ) {
             Text("پخش صدا", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
